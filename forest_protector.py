@@ -295,7 +295,7 @@ class Enemy:
             size = self.properties["size"] * 2
             self.image = pygame.transform.scale(self.image, (size, size))
             self.use_image = True
-        except:
+        except Exception:
             self.use_image = False
         
     def update(self):

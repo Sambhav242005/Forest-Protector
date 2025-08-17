@@ -36,7 +36,8 @@
 ## Game Summary
 
 Forest Protector is a strategic tower defense game where players defend against waves of enemies by placing and upgrading towers along a path. The goal is to prevent enemies from reaching the end of the path within a 5-minute time limit. As you progress through 10 waves of increasing difficulty, you'll face more enemies with stronger compositions. The game features 50 unique path combinations that change after each wave, requiring players to adapt their strategies dynamically.
----
+
+
 ## Basic Mechanics
 
 - **Objective**: Prevent enemies from reaching the end of the path by strategically placing towers.
@@ -50,60 +51,21 @@ Forest Protector is a strategic tower defense game where players defend against 
 - **Tower Upgrades**: Each tower type has a maximum upgrade level. Upgrades improve damage, range, fire rate, and accuracy.
 
 ## Tower Types
+| Tower Type   | Cost  | Damage | Range | Fire Rate (shots/s) | Accuracy | Projectile Speed | Max Level | Color        |
+| ------------ | ----- | ------ | ----- | ------------------- | -------- | ---------------- | --------- | ------------ |
+| Archer Tower | \$50  | 20     | 150   | 2.5                 | 80%      | 8                | 5         | Archer Green |
+| Cannon Tower | \$75  | 40     | 100   | 1.0                 | 65%      | 5                | 3         | Cannon Gray  |
+| Magic Tower  | \$100 | 30     | 120   | 2.0                 | 95%      | 10               | 2         | Magic Purple |
 
-### Archer Tower
-- **Cost**: $50
-- **Damage**: 15
-- **Range**: 150
-- **Fire Rate**: 1.5 shots/second
-- **Accuracy**: 80%
-- **Max Level**: 5
-- **Best For**: Long-range coverage with moderate damage
 
-### Cannon Tower
-- **Cost**: $75
-- **Damage**: 40
-- **Range**: 100
-- **Fire Rate**: 0.5 shots/second
-- **Accuracy**: 65%
-- **Max Level**: 4
-- **Best For**: High damage against strong enemies at short range
-
-### Magic Tower
-- **Cost**: $100
-- **Damage**: 25
-- **Range**: 120
-- **Fire Rate**: 1.0 shots/second
-- **Accuracy**: 95%
-- **Max Level**: 6
-- **Special Ability**: Predicts enemy movement for better accuracy
-- **Best For**: High precision targeting with good range
-
----
 ## Enemy Types
 
-### Goblin
-- **Health**: 50
-- **Speed**: 2.5 (fastest)
-- **Reward**: $10
-- **Appearance**: Small, red enemy
-- **Threat Level**: Low
+| Enemy  | Health | Speed | Reward | Size | Color (RGB)   |
+| ------ | ------ | ----- | ------ | ---- | ------------- |
+| Goblin | 50     | 3.0   | \$25   | 20   | (200, 50, 50) |
+| Orc    | 75     | 2.5   | \$35   | 30   | (100, 50, 50) |
+| Troll  | 100    | 2.0   | \$50   | 25   | (50, 25, 25)  |
 
-### Orc
-- **Health**: 75
-- **Speed**: 2.0 (medium)
-- **Reward**: $12
-- **Appearance**: Medium-sized, dark red enemy
-- **Threat Level**: Medium
-
-### Troll
-- **Health**: 100
-- **Speed**: 1.0 (slowest)
-- **Reward**: $15
-- **Appearance**: Large, dark brown enemy
-- **Threat Level**: High
-
----
 ## Path System
 
 The game features a dynamic path system with 50 unique combinations:
