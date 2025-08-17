@@ -520,6 +520,7 @@ class Game:
         pygame.display.set_caption("Forest Protector")
         self.clock = pygame.time.Clock()
         self.running = True
+        self.restart_available = False
         self.game_state = "playing"  # playing, game_over, victory
         self.score = 0
         self.money = 150
@@ -555,7 +556,13 @@ class Game:
         self.base_enemies = 5  # Starting number of enemies
         self.enemy_increment = 2  # Additional enemies per wave
         self.max_enemies_per_wave = 25  # Maximum enemies in a wave
-        
+
+    # Add this method to the Game class
+    def restart_game(self):
+        self.__init__()  # Reset all game attributes
+        self.restart_available = True
+
+
     def get_enemies_in_wave(self, wave):
         """Calculate number of enemies for the given wave"""
         enemies = self.base_enemies + (wave - 1) * self.enemy_increment
@@ -592,6 +599,10 @@ class Game:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
+                # Add restart functionality
+                elif event.key == pygame.K_SPACE and (self.game_state == "game_over" or self.game_state == "victory"):
+                    self.restart_game()
+                    return  # Skip other event processing when restarting
                 elif event.key == pygame.K_1:
                     self.selected_tower_type = TowerType.ARCHER
                 elif event.key == pygame.K_2:
@@ -634,7 +645,7 @@ class Game:
                         if dist_to_segment < PATH_WIDTH / 2 + GRID_SIZE:
                             valid_position = False
                             break
-                    
+                        
                     tower_cost = TOWER_SETTINGS[self.selected_tower_type]["cost"]
                     if valid_position and self.money >= tower_cost:
                         self.money -= tower_cost
@@ -982,56 +993,60 @@ class Game:
         overlay.set_alpha(200)
         overlay.fill(BLACK)
         self.screen.blit(overlay, (0, 0))
-        
+
         # Draw game over panel
         panel_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 4, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         pygame.draw.rect(self.screen, DARK_GREEN, panel_rect)
         pygame.draw.rect(self.screen, RED, panel_rect, 5)
-        
+
         game_over_text = self.title_font.render("GAME OVER", True, RED)
         text_rect = game_over_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
         self.screen.blit(game_over_text, text_rect)
-        
+
         score_text = self.font.render(f"Final Score: {self.score}", True, WHITE)
         score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         self.screen.blit(score_text, score_rect)
-        
+
         waves_completed_text = self.font.render(f"Waves Completed: {self.wave}/10", True, WHITE)
         waves_rect = waves_completed_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
         self.screen.blit(waves_completed_text, waves_rect)
-        
-        restart_text = self.small_font.render("Press ESC to exit", True, WHITE)
+
+        # Changed this line to show restart option
+        restart_text = self.small_font.render("Press SPACE to restart or ESC to exit", True, WHITE)
         restart_rect = restart_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
         self.screen.blit(restart_text, restart_rect)
+
     
+    # Modify the draw_victory method
     def draw_victory(self):
         overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         overlay.set_alpha(200)
         overlay.fill(BLACK)
         self.screen.blit(overlay, (0, 0))
-        
+
         # Draw victory panel
         panel_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 4, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         pygame.draw.rect(self.screen, DARK_GREEN, panel_rect)
         pygame.draw.rect(self.screen, GOLD, panel_rect, 5)
-        
+
         victory_text = self.title_font.render("VICTORY!", True, GOLD)
         text_rect = victory_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 70))
         self.screen.blit(victory_text, text_rect)
-        
+
         score_text = self.font.render(f"Final Score: {self.score}", True, WHITE)
         score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 20))
         self.screen.blit(score_text, score_rect)
-        
+
         bonus_text = self.small_font.render(f"Wave Bonus: +{WAVE_BONUS}", True, YELLOW)
         bonus_rect = bonus_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 20))
         self.screen.blit(bonus_text, bonus_rect)
-        
+
         max_enemies_text = self.font.render(f"Max Enemies in Wave: {self.get_enemies_in_wave(10)}", True, WHITE)
         max_rect = max_enemies_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 60))
         self.screen.blit(max_enemies_text, max_rect)
-        
-        restart_text = self.small_font.render("Press ESC to exit", True, WHITE)
+
+        # Changed this line to show restart option
+        restart_text = self.small_font.render("Press SPACE to restart or ESC to exit", True, WHITE)
         restart_rect = restart_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
         self.screen.blit(restart_text, restart_rect)
     
