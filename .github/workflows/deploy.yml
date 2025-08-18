@@ -3,7 +3,7 @@ name: Deploy Pygame to GitHub Pages
 on:
   push:
     branches:
-      - main   # your default branch
+      - main
 
 jobs:
   build:
@@ -15,19 +15,31 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      - name: Install system deps
         run: |
-          pip install pygbag
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python deps
+        run: |
+          pip install pygbag black
+
+      # Cache emscripten/pygbag build to avoid 20+ min recompile
+      - name: Cache pygbag emscripten build
+        uses: actions/cache@v4
+        with:
+          path: ~/.emscripten_cache
+          key: ${{ runner.os }}-emscripten
 
       - name: Build Pygame for Web
         run: |
-          python -m pygbag forest_protector.py   # your entry file
+          python -m pygbag forest_protector.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: build/web/   # pygbag output folder
+          path: build/web/
 
   deploy:
     runs-on: ubuntu-latest
