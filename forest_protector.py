@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import math
 import random
@@ -1325,14 +1326,15 @@ class Game:
         restart_rect = restart_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
         self.screen.blit(restart_text, restart_rect)
     
-    def run(self):
+    async def run(self):
         while self.running:
             self.handle_events()
             self.update()
             self.draw()
             self.clock.tick(FPS)
+            await asyncio.sleep(0) 
         
         pygame.quit()
 if __name__ == "__main__":
     game = Game()
-    game.run()
+    asyncio.run(game.run())
