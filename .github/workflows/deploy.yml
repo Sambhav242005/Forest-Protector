@@ -31,7 +31,7 @@ jobs:
         run: pip install pygbag
 
       - name: Build game with pygbag
-        run: pygbag --build forest_protector.py
+        run: pygbag --build main.py
 
       - name: Upload build folder
         uses: actions/upload-pages-artifact@v3
