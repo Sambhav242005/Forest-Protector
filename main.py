@@ -849,8 +849,6 @@ class Game:
                         self.game_state = "paused"
                     elif self.game_state == "paused":
                         self.game_state = "playing"
-                elif event.key == pygame.K_c:  # Change path manually
-                    self.change_path()
                 elif event.key == pygame.K_UP:  # Increase game speed
                     self.change_game_speed(self.speed_increment)
                 elif event.key == pygame.K_DOWN:  # Decrease game speed
@@ -911,8 +909,6 @@ class Game:
                 self.change_game_speed(self.speed_increment)
             if self.speed_down_button.handle_event(event):
                 self.change_game_speed(-self.speed_increment)
-            if self.path_button.handle_event(event):
-                self.change_path()
             if self.pause_button.handle_event(event):
                 if self.game_state == "playing":
                     self.game_state = "paused"
@@ -1298,7 +1294,6 @@ class Game:
         instructions = [
             "1/2/3: Select Tower",
             "Click: Place/Upgrade",
-            "C: Change Path",
             "P: Pause",
             "↑/↓: Change Speed",
             "+/-: Change Difficulty",
